@@ -1,9 +1,9 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { UpperCasePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { HEROES } from './../mock-heroes';
 import { HeroModel } from '../hero.model';
+import { HeroService } from '../hero-service';
 
 import { HeroeDetails } from '../heroe-details/heroe-details';
 
@@ -18,9 +18,25 @@ export class Heroes {
   //   id: 1,
   //   name: 'Windstorm',
   // });
-  heroes = signal<HeroModel[]>(HEROES);
+  private readonly service = inject(HeroService);
+  heroes = signal<HeroModel[]>([]);
   selectedHero = signal<HeroModel | undefined>(undefined);
   onSelect(hero: HeroModel): void {
     this.selectedHero.set(hero);
   }
+  getHeroes(): void {
+    const data = this.service.getHeroes();
+    this.heroes.set(data);
+  }
+  ngOnInit(): void {
+    this.getHeroes();
+    // this.getHeroesOf();
+  }
+
+  heroesOf: HeroModel[] = [];
+  // selectedHeroOf: HeroModel[] | undefined;
+
+  // getHeroesOf(): void {
+  //   this.service.getHeroesOf().subscribe((response) => (this.heroesOf = response));
+  // }
 }
