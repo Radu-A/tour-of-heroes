@@ -1,0 +1,6 @@
+@if (service.messages.length) {
+<h2>Messages</h2>
+<button type="'button" class="clear" (click)="service.clear()">Clear messages</button>
+@for (message of service.messages; track $index) {
+<p>{{ message }}</p>
+} }
