@@ -5,9 +5,11 @@ import { FormsModule } from '@angular/forms';
 import { HEROES } from './../mock-heroes';
 import { HeroModel } from '../hero.model';
 
+import { HeroeDetails } from '../heroe-details/heroe-details';
+
 @Component({
   selector: 'app-heroes',
-  imports: [UpperCasePipe, FormsModule],
+  imports: [UpperCasePipe, FormsModule, HeroeDetails],
   templateUrl: './heroes.html',
   styleUrl: './heroes.css',
 })
@@ -17,8 +19,8 @@ export class Heroes {
   //   name: 'Windstorm',
   // });
   heroes = signal<HeroModel[]>(HEROES);
-  selectedHero?: HeroModel;
+  selectedHero = signal<HeroModel | undefined>(undefined);
   onSelect(hero: HeroModel): void {
-    this.selectedHero = hero;
+    this.selectedHero.set(hero);
   }
 }
